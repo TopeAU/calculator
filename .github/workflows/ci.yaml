@@ -34,4 +34,15 @@ jobs:
           run: |
             docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
             docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        - name: Update helm
+          env:
+             IMAGE_TAG: ${{ github.sha }}          
+          run: |
+            sudo add-apt-repository ppa:rmescandon/yq
+            sudo apt update
+            sudo apt install yq -y
+            git clone https://github.com/TopeAU/infra.git
+            cd helm-chart
+            yq e '.image.tag = "'$IMAGE_TAG'"' -i calculator/values.yaml
+              
        
