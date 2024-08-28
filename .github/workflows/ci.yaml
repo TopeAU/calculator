@@ -42,7 +42,6 @@ jobs:
             repository: TopeAU/infra  
             token: ${{ secrets.my_pat }}   
 
-
         - name: Update helm
           env:
             IMAGE_TAG: ${{ github.sha }}          
